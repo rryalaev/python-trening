@@ -16,33 +16,31 @@ class TestTest():
     def teardown_method(self, method):
         self.driver.quit()
 
-    def test_test(self):
-        self.open_home_page()
-        self.login()
-        self.open_group_page()
-        self.create_group()
-        self.logout()
-
     def open_home_page(self):
         self.driver.get("http://localhost/addressbook/")
         self.driver.set_window_size(1050, 708)
 
-    def login(self):
-        self.driver.find_element(By.NAME, "user").send_keys("admin")
-        self.driver.find_element(By.NAME, "pass").send_keys("secret")
+    def login(self, username, password):
+        self.driver.find_element(By.NAME, "user").send_keys(username)
+        self.driver.find_element(By.NAME, "pass").send_keys(password)
         self.driver.find_element(By.NAME, "pass").send_keys(Keys.ENTER)
 
     def open_group_page(self):
         self.driver.find_element(By.LINK_TEXT, "groups").click()
 
-    def create_group(self):
+    def create_group(self, name, header, footer):
         self.driver.find_element(By.NAME, "new").click()
-        self.driver.find_element(By.NAME, "group_name").click()
-        self.driver.find_element(By.NAME, "group_name").send_keys("test-1")
-        self.driver.find_element(By.NAME, "group_header").send_keys("1")
-        self.driver.find_element(By.NAME, "group_footer").click()
-        self.driver.find_element(By.NAME, "group_footer").send_keys("2")
+        self.driver.find_element(By.NAME, "group_name").send_keys(name)
+        self.driver.find_element(By.NAME, "group_header").send_keys(header)
+        self.driver.find_element(By.NAME, "group_footer").send_keys(footer)
         self.driver.find_element(By.NAME, "submit").click()
 
     def logout(self):
         self.driver.find_element(By.LINK_TEXT, "Logout").click()
+
+    def test(self):
+        self.open_home_page()
+        self.login(username="admin", password="secret")
+        self.open_group_page()
+        self.create_group(name="test-1", header="1", footer="2")
+        self.logout()
