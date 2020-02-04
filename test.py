@@ -6,6 +6,7 @@ import json
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from group import group
 
 
 class TestTest():
@@ -28,11 +29,11 @@ class TestTest():
     def open_group_page(self):
         self.driver.find_element(By.LINK_TEXT, "groups").click()
 
-    def create_group(self, name, header, footer):
+    def create_group(self, group):
         self.driver.find_element(By.NAME, "new").click()
-        self.driver.find_element(By.NAME, "group_name").send_keys(name)
-        self.driver.find_element(By.NAME, "group_header").send_keys(header)
-        self.driver.find_element(By.NAME, "group_footer").send_keys(footer)
+        self.driver.find_element(By.NAME, "group_name").send_keys(group.name)
+        self.driver.find_element(By.NAME, "group_header").send_keys(group.header)
+        self.driver.find_element(By.NAME, "group_footer").send_keys(group.footer)
         self.driver.find_element(By.NAME, "submit").click()
 
     def logout(self):
@@ -42,12 +43,12 @@ class TestTest():
         self.open_home_page()
         self.login(username="admin", password="secret")
         self.open_group_page()
-        self.create_group(name="test-1", header="1", footer="2")
+        self.create_group(group(name="test-1", header="1", footer="2"))
         self.logout()
 
     def test_add_empty_group(self):
         self.open_home_page()
         self.login(username="admin", password="secret")
         self.open_group_page()
-        self.create_group(name="", header="", footer="")
+        self.create_group(group(name="", header="", footer=""))
         self.logout()
