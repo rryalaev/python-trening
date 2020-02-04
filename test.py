@@ -38,9 +38,16 @@ class TestTest():
     def logout(self):
         self.driver.find_element(By.LINK_TEXT, "Logout").click()
 
-    def test(self):
+    def test_add_group(self):
         self.open_home_page()
         self.login(username="admin", password="secret")
         self.open_group_page()
         self.create_group(name="test-1", header="1", footer="2")
+        self.logout()
+
+    def test_add_empty_group(self):
+        self.open_home_page()
+        self.login(username="admin", password="secret")
+        self.open_group_page()
+        self.create_group(name="", header="", footer="")
         self.logout()
